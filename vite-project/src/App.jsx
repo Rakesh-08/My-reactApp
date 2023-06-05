@@ -129,6 +129,7 @@ export default function App() {
                   onChange={toggleCheckbox}
                   checked={todoList.item?.checkbox}
                 />
+                    <div>
 
                 <h4
                   className={`absolute ${
@@ -140,6 +141,7 @@ export default function App() {
                   {" "}
                   {item}{" "}
                 </h4>
+                </div>
 
                 <button
                   id="editbtn"
