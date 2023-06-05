@@ -13,7 +13,7 @@
 
 .boardWrapper{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 @media screen and (max-width:400px) {
