@@ -63,6 +63,8 @@
 .absolute {
   position: absolute;
 }
+.absolute div{
+  text-overflow:hidden}
 
 .todos > input {
   left: 20px;
