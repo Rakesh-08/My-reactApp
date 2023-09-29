@@ -4,12 +4,13 @@
 .board {
   margin: 40px;
 }
-.resetButton{
+.resetButton{    
   margin: 20px auto;
-  width: 3rem;
+  padding: 0.54em;
+  border-radius: 20%;
+  background: greenyellow;
   font-size: medium;
-  cursor: pointer;
-}
+  cursor: pointer;}
 
 .boardWrapper{
   display: flex;
