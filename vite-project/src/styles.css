@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 1em 4em;
+  margin: 1em;
 }
 
 .List {
@@ -58,6 +58,7 @@
   display: flex;
   justify-content: space-evenly;
   padding: 1.8em 6rem;
+  height:2vh;
   background-color: rgb(44, 202, 181);
 }
 .absolute {
@@ -73,6 +74,8 @@
 }
 .todos h4 {
   left: 26%;
+  width:22vw;
+  overflow:hidden;
 }
 .todos #deletebtn {
   right: 7%;
