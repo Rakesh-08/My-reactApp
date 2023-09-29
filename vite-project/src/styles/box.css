@@ -5,4 +5,5 @@
   width: calc(250px / 3);
   height: calc(250px / 3);
   border: 2px solid black;
+  font-size:1.5em;
 }
