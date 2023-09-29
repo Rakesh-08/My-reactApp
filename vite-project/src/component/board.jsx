@@ -94,7 +94,7 @@ class Board extends react.Component {
     return (
       <div className="boardWrapper">
         <div className="board">
-          <h2 className="boardHeading"> {status} </h2>
+          <h2 className={`boardHeading ${this.state.boxes[winner[0]]?"winner":isFinished?"drawn":""}`}> {status} </h2>
           <div className="boardRow">
             <Box
               win={ this.winningBoxes(0)}
