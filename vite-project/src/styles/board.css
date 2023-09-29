@@ -42,8 +42,10 @@
   background-color: red;
 }
 .boardHeading{
-  
   font-weight: 499;
-  color:blue;
 }
+.winner{
+  color:red;}
+.drawn{
+  color:grey;}
 
