@@ -218,9 +218,11 @@ const PlayGroundPage = () => {
   return (
     <div style={{ minHeight: "85vh", marginTop: "1em" }}>
       <div>
+        <span ref={scoreHandleRef}></span>
         <p style={{ textAlign: "center", fontSize: "1.1em", color: "white" }}>
           Rounds
         </p>
+        
         <div
           className="rounds"
           style={{ display: "flex", justifyContent: "center", color: "white" }}
@@ -263,6 +265,7 @@ const PlayGroundPage = () => {
             {rounds[2]?.r}
           </div>
         </div>
+        
       </div>
 
       {showTarget && (
@@ -283,7 +286,6 @@ const PlayGroundPage = () => {
           </p>
         </div>
       )}
-      <span ref={scoreHandleRef}></span>
 
       <div
         style={{
@@ -490,7 +492,11 @@ let MatchModal = ({
                
               </div>
             <button
-              onClick={() => window.location.reload()}
+                onClick={() => {
+                  
+                  NavigateTo("/Toss");
+                  window.location.reload();
+                }}
               className="btn btn-outline-warning border-2"
             >
               Restart Game
