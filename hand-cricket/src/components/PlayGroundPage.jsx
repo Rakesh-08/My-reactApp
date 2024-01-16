@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useMemo } from "react";
+import React, { useState, useEffect,useMemo,useRef } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
@@ -29,15 +29,21 @@ const PlayGroundPage = () => {
   let [showMatchModal, setShowMatchModal] = useState(false);
   let [modalContent, setModalContent] = useState({ desc: "", btn: "" });
 
+  let scoreHandleRef = useRef();
   
   useEffect(() => {
   
     if (timerEnds) {
-       setTimerEnds(false)
+      setTimerEnds(false)
       Timer()
-      return;
+    }
+
+    if (!firstInning) {
+      scoreHandleRef.current.scrollIntoView({behaviour:"smoothe"})
     }
   }, [timerEnds]);
+
+  
 
 
   let Timer = () => {
@@ -218,14 +224,16 @@ const PlayGroundPage = () => {
         </p>
         <div
           className="rounds"
-          style={{ display: "flex", justifyContent: "center",color:"white" }}
+          style={{ display: "flex", justifyContent: "center", color: "white" }}
         >
           <div
-            
             style={{
               backgroundColor:
-                rounds[0]?.r == "W" ? "green" : rounds[0]?.r == "L" ? "red" : "",
-            
+                rounds[0]?.r == "W"
+                  ? "green"
+                  : rounds[0]?.r == "L"
+                  ? "red"
+                  : "",
             }}
           >
             {rounds[0]?.r}
@@ -234,7 +242,11 @@ const PlayGroundPage = () => {
           <div
             style={{
               backgroundColor:
-                rounds[1]?.r == "W" ? "green" : rounds[1]?.r == "L" ? "red" : "",
+                rounds[1]?.r == "W"
+                  ? "green"
+                  : rounds[1]?.r == "L"
+                  ? "red"
+                  : "",
             }}
           >
             {rounds[1]?.r}
@@ -242,8 +254,11 @@ const PlayGroundPage = () => {
           <div
             style={{
               backgroundColor:
-                rounds[2]?.r == "W" ? "green" : rounds[2]?.r == "L" ? "red" : "",
-              
+                rounds[2]?.r == "W"
+                  ? "green"
+                  : rounds[2]?.r == "L"
+                  ? "red"
+                  : "",
             }}
           >
             {rounds[2]?.r}
@@ -269,6 +284,7 @@ const PlayGroundPage = () => {
           </p>
         </div>
       )}
+      <span ref={scoreHandleRef}></span>
 
       <div
         style={{
@@ -283,8 +299,13 @@ const PlayGroundPage = () => {
         />
         <MemoizedUserProfile player2="other" scoreCard={[...otherScoreCard]} />
       </div>
-   
-      <CounterComponent otherScore={otherScore} setTimerEnds={setTimerEnds} timerRestarts={timerRestarts} setTimerRestarts={setTimerRestarts} />
+
+      <CounterComponent
+        otherScore={otherScore}
+        setTimerEnds={setTimerEnds}
+        timerRestarts={timerRestarts}
+        setTimerRestarts={setTimerRestarts}
+      />
       <div
         style={{
           display: "flex",
@@ -317,7 +338,7 @@ const PlayGroundPage = () => {
         rounds={rounds}
       />
 
-      <MemoizedRecommendation/>
+      <MemoizedRecommendation />
     </div>
   );
 };
@@ -485,7 +506,6 @@ let MatchModal = ({
 let CounterComponent = ({otherScore,setTimerEnds,timerRestarts,setTimerRestarts}) => {
   let [timer, setTimer] = useState(5);
 
-
    useEffect(() => {
      if (timer == 0) {
        setTimerEnds(true);
@@ -520,7 +540,7 @@ let CounterComponent = ({otherScore,setTimerEnds,timerRestarts,setTimerRestarts}
         <p style={{ margin: "1em", color: "wheat", fontSize: "1.1em" }}>
           {" "}
           {timer > 0 ? (
-            "Please choose a score before the timer gets up"
+            " Choose a score before timer finishes"
           ) : (
             <span
               style={{
@@ -529,7 +549,7 @@ let CounterComponent = ({otherScore,setTimerEnds,timerRestarts,setTimerRestarts}
                 fontStyle: "italic",
               }}
             >
-              Opponent picked this Number
+              Opponent picked this Score
             </span>
           )}
         </p>

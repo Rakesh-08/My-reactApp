@@ -31,7 +31,7 @@ const TossPage = () => {
   return (
     <div
       style={{
-        minHeight: "86vh",
+        minHeight: "87vh",
       }}
     >
       <h4

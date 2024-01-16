@@ -55,14 +55,14 @@ const LandingPage = () => {
             will bat and try to score more than the batsman to win the match.{" "}
           </li>
           <li>
-            similar to this round , there will be 4 more rounds to decide the
-            ultimate winner the game{" "}
+            similar to this round , there will be 2 more rounds to decide the
+            ultimate winner the game{" "}.
           </li>
           <li>
-            After finishing all 3 rounds, it could also possible that you and
-            the other player has won equal matches because of some draw matches
-            in some rounds, so you can re-play the game to decide the winner
+            After finishing all 3 rounds, it could be possible that you and
+            the other player has won equal matches because of some draw matches, so you can re-play the game to decide the winner.
           </li>
+          <li>So lets start the game...</li>
         </ul>
         <input onClick={(e) => setChecked(e.target.checked)} type="checkbox" />{" "}
         <span style={{ color: "white", marginLeft: "0.4em" }}>
