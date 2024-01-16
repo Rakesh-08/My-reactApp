@@ -72,9 +72,10 @@ const LandingPage = () => {
 
       <button
         onClick={RouteToToss}
-        className="Btn"
         style={{
-          background: "goldenRod",
+          background: "orange",
+          padding: '0.5em',
+          border:"pink",
           marginTop: "8vh",
            boxShadow: "1px 1px 0.3em 0.1em pink" ,fontStyle:"italic"
         }}

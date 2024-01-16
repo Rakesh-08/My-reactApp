@@ -32,18 +32,17 @@ const PlayGroundPage = () => {
   let scoreHandleRef = useRef();
   
   useEffect(() => {
-  
     if (timerEnds) {
       setTimerEnds(false)
       Timer()
     }
-
-    if (!firstInning) {
-      scoreHandleRef.current.scrollIntoView({behaviour:"smoothe"})
-    }
   }, [timerEnds]);
 
-  
+  useEffect(() => {
+      if (!firstInning) {
+        scoreHandleRef.current.scrollIntoView({ behaviour: "smoothe" });
+      }
+  },[firstInning])
 
 
   let Timer = () => {

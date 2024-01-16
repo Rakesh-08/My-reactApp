@@ -33,6 +33,9 @@ function App() {
         <Route path="/Toss" element={<TossPage />}></Route>
         <Route path="/Playground" element={<PlayGroundPage/>}></Route>
       </Routes>
+      <div className="text-white fs-5 text-center p-1 mt-2">
+          Creator :-  @Rakesh_Mandal
+      </div>
     </BrowserRouter>
   );
 }
