@@ -456,7 +456,7 @@ let MatchModal = ({
                       type: "rounds",
                       payload: rounds,
                     });
-                   window.location.reload()
+                   NavigateTo("/Toss");
                   }
                   setShowMatchModal(false);
                 }}
