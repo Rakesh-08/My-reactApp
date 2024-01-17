@@ -328,6 +328,7 @@ const PlayGroundPage = () => {
         setShowTarget={setShowTarget}
         setTimerRestarts={setTimerRestarts}
         rounds={rounds}
+        setFirstChoice={setFirstChoice}
       />
 
       <MemoizedRecommendation />
@@ -386,7 +387,7 @@ let MatchModal = ({
   modalContent,
   setShowTarget,
   setTimerRestarts,
-  rounds,
+  rounds,setFirstChoice
 }) => {
 
   let [finalScoreBoard,setFinalScoreBoard]=useState(false)
@@ -455,7 +456,8 @@ let MatchModal = ({
                       type: "rounds",
                       payload: rounds,
                     });
-                    NavigateTo("/Toss");
+                    let coin=['bat' ,'bowl'];
+                    setFirstChoice(coin[Math.floor(Math.random()*2)]) ;
                   }
                   setShowMatchModal(false);
                 }}
