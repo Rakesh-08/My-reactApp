@@ -389,7 +389,7 @@ let MatchModal = ({
   modalContent,
   setShowTarget,
   setTimerRestarts,
-  rounds
+  rounds}) =>
   let [finalScoreBoard,setFinalScoreBoard]=useState(false)
   let NavigateTo = useNavigate();
   let dispatch = useDispatch();
