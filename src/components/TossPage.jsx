@@ -143,7 +143,7 @@ const TossPage = () => {
             <button
               onClick={tossTheCoin}
               className="Btn"
-              style={{ background: "green" }}
+                style={{ background: "black" }}
             >
               Flip the coin
             </button>

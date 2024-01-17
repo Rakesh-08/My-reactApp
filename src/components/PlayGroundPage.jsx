@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useMemo,useRef } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import Recommedation from "./Recommedation";
@@ -7,10 +7,9 @@ import Recommedation from "./Recommedation";
 let ScoreOptions = [1, 2, 3, 4, 5, 6];
 let MemoizedRecommendation = React.memo(Recommedation);
 
-
 const PlayGroundPage = () => {
-  let {decision,parts} = useSelector((state) => state.tossResult);
-  let [firstChoice, setFirstChoice] = useState(decision);
+  let { decision, parts } = useSelector((state) => state.tossResult);
+  let [firstChoice, setFirstChoice] = useState(decision||"bat");
   let [firstInning, setFirstInning] = useState(true);
   let [timerEnds, setTimerEnds] = useState(false);
   let [timerRestarts, setTimerRestarts] = useState(false);
@@ -30,20 +29,19 @@ const PlayGroundPage = () => {
   let [modalContent, setModalContent] = useState({ desc: "", btn: "" });
 
   let scoreHandleRef = useRef();
-  
+
   useEffect(() => {
     if (timerEnds) {
-      setTimerEnds(false)
-      Timer()
+      setTimerEnds(false);
+      Timer();
     }
   }, [timerEnds]);
 
   useEffect(() => {
-      if (!firstInning) {
-        scoreHandleRef.current.scrollIntoView({ behaviour: "smoothe" });
-      }
-  },[firstInning])
-
+    if (!firstInning) {
+      scoreHandleRef.current.scrollIntoView({ behaviour: "smoothe" });
+    }
+  }, [firstInning]);
 
   let Timer = () => {
     let pickedByOtherPlayer = ScoreOptions[Math.floor(Math.random() * 6)];
@@ -71,15 +69,15 @@ const PlayGroundPage = () => {
         goToNextInning();
       } else {
         calcMatchWinner();
-        setInningsBall({...inningsBall,second:0})
+        setInningsBall({ ...inningsBall, second: 0 });
       }
       return;
     } else {
       // run added in his total and go to next ball
 
-       let win = " Congrats! You WON the match. Lets rock the next round as well";
-       let lost =
-         " Sorry buddy! You Lost the match. try to win next round";    
+      let win =
+        " Congrats! You WON the match. Lets rock the next round as well";
+      let lost = " Sorry buddy! You Lost the match. try to win next round";
 
       if (firstChoice == "bat") {
         let temp = yourScoreCard;
@@ -89,13 +87,13 @@ const PlayGroundPage = () => {
           setYourScoreCard(temp);
         } else {
           temp.push(pickedScore);
-        };
+        }
 
         // checking whether he aleady reached the target score
         if (!firstInning) {
           let currentScore = temp.reduce((sum, n) => sum + n);
           if (currentScore >= target) {
-            setRounds([...rounds, {r:"W",score:currentScore}]);
+            setRounds([...rounds, { r: "W", score: currentScore }]);
             setModalContent({
               desc: win,
               btn: "Continue to Next Round",
@@ -109,20 +107,19 @@ const PlayGroundPage = () => {
         temp1.push(pickedByOtherPlayer);
         setOtherScoreCard(temp1);
 
-          if (!firstInning) {
-            let currentScore = temp1.reduce((sum, n) => sum + n);
+        if (!firstInning) {
+          let currentScore = temp1.reduce((sum, n) => sum + n);
 
-            
-            if (currentScore >= target) {
-              setRounds([...rounds,{r:"L",score:currentScore}])
-              setModalContent({
-                desc: lost,
-                btn: "Continue to Next Round",
-              });
-              setShowMatchModal(true);
-              return
-            }
+          if (currentScore >= target) {
+            setRounds([...rounds, { r: "L", score: currentScore }]);
+            setModalContent({
+              desc: lost,
+              btn: "Continue to Next Round",
+            });
+            setShowMatchModal(true);
+            return;
           }
+        }
       }
     }
 
@@ -140,8 +137,7 @@ const PlayGroundPage = () => {
     }
 
     setTimeout(() => {
-      if (timerEnds ) {
-       
+      if (timerEnds) {
         setTimerRestarts(true);
         setPickedScore(null);
       }
@@ -150,7 +146,7 @@ const PlayGroundPage = () => {
 
   let goToNextInning = () => {
     let temp;
-    
+
     if (firstChoice == "bat") {
       temp = yourScoreCard;
       setFirstChoice("bowl");
@@ -158,7 +154,7 @@ const PlayGroundPage = () => {
       temp = otherScoreCard;
       setFirstChoice("bat");
     }
-    setTarget(temp.reduce((sum, n) => (sum + n),0)+1);
+    setTarget(temp.reduce((sum, n) => sum + n, 0) + 1);
     setModalContent({
       desc: "First inning is over, continue to play the next inning of the match. ",
       btn: "Continue",
@@ -174,45 +170,41 @@ const PlayGroundPage = () => {
     let d;
     let win = " Congrats! You WON the match. Lets rock the next round as well";
     let lost = " Sorry buddy! You Lost the match.  try to win next round";
-    let draw = "The Match ended as DRAW. Lets continue to next round"
+    let draw = "The Match ended as DRAW. Lets continue to next round";
 
     if (firstChoice == "bat") {
-
       // while chasing the target
-      let yourTotal = yourScoreCard?.reduce((sum, n) => (sum + n),0);
+      let yourTotal = yourScoreCard?.reduce((sum, n) => sum + n, 0);
       if (yourTotal >= target) {
         d = win;
-        setRounds([...rounds,{r:"W",score:yourTotal}])
+        setRounds([...rounds, { r: "W", score: yourTotal }]);
       } else if (yourTotal == target - 1) {
         d = draw;
         setRounds([...rounds, { r: "D", score: yourTotal }]);
       } else {
-        d = lost
+        d = lost;
         setRounds([...rounds, { r: "L", score: yourTotal }]);
       }
     } else {
-       
       // while defending the target
-      let temp1 = otherScoreCard?.reduce((sum, n) => (sum + n),0);
+      let temp1 = otherScoreCard?.reduce((sum, n) => sum + n, 0);
       if (temp1 >= target) {
-        d = lost
-        setRounds([...rounds,  { r: "L", score: target-1 }]);
+        d = lost;
+        setRounds([...rounds, { r: "L", score: target - 1 }]);
       } else if (temp1 == target - 1) {
-        d = draw
+        d = draw;
         setRounds([...rounds, { r: "D", score: target - 1 }]);
       } else {
-        d = win
+        d = win;
         setRounds([...rounds, { r: "W", score: target - 1 }]);
       }
     }
 
-
     setModalContent({
       desc: d,
-      btn:"Continue to Next Round"
-    })
-    setShowMatchModal(true)
-    
+      btn: "Continue to Next Round",
+    });
+    setShowMatchModal(true);
   };
 
   return (
@@ -222,7 +214,7 @@ const PlayGroundPage = () => {
         <p style={{ textAlign: "center", fontSize: "1.1em", color: "white" }}>
           Rounds
         </p>
-        
+
         <div
           className="rounds"
           style={{ display: "flex", justifyContent: "center", color: "white" }}
@@ -265,7 +257,6 @@ const PlayGroundPage = () => {
             {rounds[2]?.r}
           </div>
         </div>
-        
       </div>
 
       {showTarget && (
@@ -345,7 +336,6 @@ const PlayGroundPage = () => {
 };
 
 let UserProfile = ({ player2, scoreCard, action }) => {
-  
   return (
     <div style={{ maxWidth: "10em", margin: "0.5em" }}>
       <p>
@@ -353,9 +343,10 @@ let UserProfile = ({ player2, scoreCard, action }) => {
           "Opponent"
         ) : (
           <>
-              You{" "}
-              
-            <span style={{ color: "wheat", fontSize: "1.1em",fontWeight:"bold" }}>
+            You{" "}
+            <span
+              style={{ color: "wheat", fontSize: "1.1em", fontWeight: "bold" }}
+            >
               {action == "bat" ? "(Batting)" : "(Bowling)"}
             </span>
           </>
@@ -376,6 +367,7 @@ let UserProfile = ({ player2, scoreCard, action }) => {
         style={{
           display: "flex",
           flexWrap: "wrap",
+          minHeight:"2.1em"
         }}
       >
         {scoreCard.map((score, i) => (
@@ -394,12 +386,13 @@ let MatchModal = ({
   modalContent,
   setShowTarget,
   setTimerRestarts,
-  rounds
-  
+  rounds,
 }) => {
+
+  let [finalScoreBoard,setFinalScoreBoard]=useState(false)
   let NavigateTo = useNavigate();
   let dispatch = useDispatch();
-  
+
   let result = {
     msg: "",
     emotion: "",
@@ -432,15 +425,15 @@ let MatchModal = ({
       show={showMatchModal}
       onHide={() => setShowMatchModal(false)}
       centered
-      size={rounds.length == 3 ? "lg" : "sm"}
+      size={finalScoreBoard ? "lg" : "sm"}
       backdrop="static"
     >
       <Modal.Body
         className={`rounded ${
-          rounds.length == 3 ? "bg-black text-white" : "bg-warning"
+          finalScoreBoard ? "bg-black text-white" : "bg-warning"
         } `}
       >
-        {rounds.length < 3 ? (
+        {!finalScoreBoard ? (
           <div>
             <p
               className={`${
@@ -449,54 +442,57 @@ let MatchModal = ({
             >
               {modalContent.desc}
             </p>
-            <button
-              onClick={() => {
-                if (modalContent.btn == "Continue") {
-                  setShowTarget(true);
-                  setTimerRestarts(true);
-                } else {
-                  dispatch({
-                    type: "rounds",
-                    payload: rounds,
-                  });
-                  NavigateTo("/Toss");
-                }
-                setShowMatchModal(false);
-              }}
-              className="btn bg-dark text-white"
-            >
-              {modalContent.btn}
-            </button>
+            {rounds.length == 3 ? (
+              <button onClick={()=>setFinalScoreBoard(true)} className="btn bg-dark text-white">Get Final Scoreboard</button>
+            ) : (
+              <button
+                onClick={() => {
+                  if (modalContent.btn == "Continue") {
+                    setShowTarget(true);
+                    setTimerRestarts(true);
+                  } else {
+                    dispatch({
+                      type: "rounds",
+                      payload: rounds,
+                    });
+                    NavigateTo("/Toss");
+                  }
+                  setShowMatchModal(false);
+                }}
+                className="btn bg-dark text-white"
+              >
+                {modalContent.btn}
+              </button>
+            )}
           </div>
         ) : (
           <div className="d-flex flex-column align-items-center">
             <p className="fs-2">{result.emotion}</p>
-              <p className="fst-italic">{result.msg}</p>
-              
-              <div className="w-100 border my-2">
-                <div className="d-flex text-info justify-content-around border-bottom m-1 mb-2">
-                   <div>Round</div>
+            <p className="fst-italic">{result.msg}</p>
+
+            <div className="w-100 border my-2">
+              <div className="d-flex text-info justify-content-around border-bottom m-1 mb-2">
+                <div>Round</div>
                 <div>Runs scored</div>
                 <div>Result</div>
-                
-                </div>
-               
-                   {rounds.map((stage, i) =>
-                  <div key={i} className="d-flex justify-content-around align-items-center">
-                    <p>{i+1}</p>
-                    <p>{stage.score}</p>
-                    <p>{stage.r}</p>
-                   
-                </div>)}
-                
-               
               </div>
+
+              {rounds.map((stage, i) => (
+                <div
+                  key={i}
+                  className="d-flex justify-content-around align-items-center"
+                >
+                  <p>{i + 1}</p>
+                  <p>{stage.score}</p>
+                  <p>{stage.r}</p>
+                </div>
+              ))}
+            </div>
             <button
-                onClick={() => {
-                  
-                  NavigateTo("/Toss");
-                  window.location.reload();
-                }}
+              onClick={() => {
+                NavigateTo("/Toss");
+                window.location.reload();
+              }}
               className="btn btn-outline-warning border-2"
             >
               Restart Game
@@ -508,29 +504,32 @@ let MatchModal = ({
   );
 };
 
-let CounterComponent = ({otherScore,setTimerEnds,timerRestarts,setTimerRestarts}) => {
+let CounterComponent = ({
+  otherScore,
+  setTimerEnds,
+  timerRestarts,
+  setTimerRestarts,
+}) => {
   let [timer, setTimer] = useState(5);
 
-   useEffect(() => {
-     if (timer == 0) {
-       setTimerEnds(true);
-       return;
-     }
-     let interval = setInterval(() => {
-       setTimer(timer - 1);
-     }, 1000);
-
-     return () => clearInterval(interval);
-   }, [timer]);
-  
   useEffect(() => {
+    if (timer == 0) {
+      setTimerEnds(true);
+      return;
+    }
+    let interval = setInterval(() => {
+      setTimer(timer - 1);
+    }, 1000);
 
-      if (timerRestarts) {
-        setTimer(5);
-        setTimerRestarts(false);
-      }
+    return () => clearInterval(interval);
+  }, [timer]);
 
-  },[timerRestarts])
+  useEffect(() => {
+    if (timerRestarts) {
+      setTimer(5);
+      setTimerRestarts(false);
+    }
+  }, [timerRestarts]);
   return (
     <div
       style={{
@@ -545,7 +544,7 @@ let CounterComponent = ({otherScore,setTimerEnds,timerRestarts,setTimerRestarts}
         <p style={{ margin: "1em", color: "wheat", fontSize: "1.1em" }}>
           {" "}
           {timer > 0 ? (
-            " Choose a score before timer finishes"
+            " Choose a score before the timer gets up "
           ) : (
             <span
               style={{
@@ -576,15 +575,18 @@ let CounterComponent = ({otherScore,setTimerEnds,timerRestarts,setTimerRestarts}
       </div>
     </div>
   );
-}
+};
 
 let areEqual = (prevProps, newProps) => {
+  if (prevProps.scoreCard?.length == newProps.scoreCard?.length) {
+    if (prevProps.action !== newProps.action) {
+      return false;
+    };
 
-  if (prevProps.scoreCard?.length == newProps.scoreCard?.length ) {
-    return true
+    return true;
   }
-}
+};
 
 let MemoizedModal = React.memo(MatchModal);
-let MemoizedUserProfile = React.memo(UserProfile,areEqual);
+let MemoizedUserProfile = React.memo(UserProfile, areEqual);
 export default PlayGroundPage;

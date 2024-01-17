@@ -20,6 +20,7 @@ const LandingPage = () => {
         flexDirection: "column",
         justifyContetent: "center",
         alignItems: "center",
+        
       }}
     >
       <div
@@ -74,9 +75,10 @@ const LandingPage = () => {
         onClick={RouteToToss}
         style={{
           background: "orange",
-          padding: '0.5em',
+          padding: '1em',
           border:"pink",
           marginTop: "8vh",
+          marginBottom: "8vh",
            boxShadow: "1px 1px 0.3em 0.1em pink" ,fontStyle:"italic"
         }}
       >
