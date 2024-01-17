@@ -6,10 +6,10 @@ body{
 }
 
 ::-webkit-scrollbar{
-  width:0.4em;
-  height:1em;
-  background-color: gray;
+  background-color: rgb(119, 112, 112);
   border-radius: 10%;
+  max-width: 0.5em;
+  max-height:0.5em;
 }
 ul li{
   margin:0.4em;
