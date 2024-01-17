@@ -5,11 +5,13 @@ import { Modal } from "react-bootstrap";
 import Recommedation from "./Recommedation";
 
 let ScoreOptions = [1, 2, 3, 4, 5, 6];
+let coin=['bat' ,'bowl'];
+let randomToss= coin[Math.floor(Math.random()*2)]
 let MemoizedRecommendation = React.memo(Recommedation);
 
 const PlayGroundPage = () => {
   let { decision, parts } = useSelector((state) => state.tossResult);
-  let [firstChoice, setFirstChoice] = useState(decision||"bat");
+  let [firstChoice, setFirstChoice] = useState(decision||randomToss);
   let [firstInning, setFirstInning] = useState(true);
   let [timerEnds, setTimerEnds] = useState(false);
   let [timerRestarts, setTimerRestarts] = useState(false);
@@ -328,7 +330,7 @@ const PlayGroundPage = () => {
         setShowTarget={setShowTarget}
         setTimerRestarts={setTimerRestarts}
         rounds={rounds}
-        setFirstChoice={setFirstChoice}
+        
       />
 
       <MemoizedRecommendation />
@@ -387,9 +389,7 @@ let MatchModal = ({
   modalContent,
   setShowTarget,
   setTimerRestarts,
-  rounds,setFirstChoice
-}) => {
-
+  rounds
   let [finalScoreBoard,setFinalScoreBoard]=useState(false)
   let NavigateTo = useNavigate();
   let dispatch = useDispatch();
@@ -456,8 +456,7 @@ let MatchModal = ({
                       type: "rounds",
                       payload: rounds,
                     });
-                    let coin=['bat' ,'bowl'];
-                    setFirstChoice(coin[Math.floor(Math.random()*2)]) ;
+                   window.location.reload()
                   }
                   setShowMatchModal(false);
                 }}
